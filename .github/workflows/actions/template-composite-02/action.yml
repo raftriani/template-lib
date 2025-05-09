@@ -1,0 +1,24 @@
+name: "GH Actions: template composite 02"
+description: Composite Action
+
+inputs:
+  registry:
+    description: "Descrição da sua Composite Action"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: "Step: Executa script 01..."
+      shell: bash
+      run: |
+        echo "::group::Agrupando seu log 01..."
+        echo "Seu script/código 01"
+        echo ::endgroup::
+
+    - name: "Step: Executa script 02..."
+      shell: bash
+      run: |
+        echo "::group::Agrupando seu log 02..."
+        echo "Seu script/código 02"
+        echo ::endgroup::

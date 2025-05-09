@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+        <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>Boas Pr&aacute;ticas para cria&ccedil;&atilde;o de uma biblioteca &period;NET</title>
+            <style>
+/* From extension vscode.github */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+.vscode-dark img[src$=\#gh-light-mode-only],
+.vscode-light img[src$=\#gh-dark-mode-only],
+.vscode-high-contrast:not(.vscode-high-contrast-light) img[src$=\#gh-light-mode-only],
+.vscode-high-contrast-light img[src$=\#gh-dark-mode-only] {
+	display: none;
+}
+
+/* From extension fantasy.markdown-all-in-one-for-web */
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+}
+/* Error */
+</style>
+            
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        <style>
+.task-list-item {
+    list-style-type: none;
+}
+
+.task-list-item-checkbox {
+    margin-left: -20px;
+    vertical-align: middle;
+    pointer-events: none;
+}
+</style>
+<style>
+:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}
+
+</style>
+<style>
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-note: #2f81f7;
+    --color-tip: #3fb950;
+    --color-warning: #d29922;
+    --color-severe: #db6d28;
+    --color-caution: #f85149;
+    --color-important: #a371f7;
+  }
+}
+
+</style>
+<style>
+.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert>:first-child {
+  margin-top: 0
+}
+
+.markdown-alert>:last-child {
+  margin-bottom: 0
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}
+
+</style>
+        
+        </head>
+        <body class="vscode-body vscode-light">
+            <h1 id="boas-práticas-para-criação-de-uma-biblioteca-net">Boas práticas para criação de uma biblioteca .NET</h1>
+<h2 id="estrutura-do-projeto">Estrutura do Projeto</h2>
+<ol>
+<li><strong>Organização de Pastas</strong>:</li>
+</ol>
+<ul>
+<li><code>src/</code>: Contém o código-fonte da biblioteca.</li>
+<li><code>tests/</code>: Contém os projetos de teste unitário e de integração.</li>
+<li><code>docs/</code>: Documentação adicional, como guias de uso e exemplos.</li>
+</ul>
+<ol start="2">
+<li><strong>Nomenclatura</strong>:</li>
+</ol>
+<ul>
+<li>Use nomes claros e descritivos que reflitam o propósito da biblioteca.</li>
+<li>Siga o padrão <code>Empresa.Produto.Funcionalidade</code> (ex.: <code>Evertec.Extensions.Binding.TenantProvider</code>).</li>
+<li>Evite abreviações desnecessárias.</li>
+</ul>
+<ol start="3">
+<li><strong>Versionamento</strong>:</li>
+</ol>
+<ul>
+<li>Siga o <a href="https://semver.org/">Semantic Versioning (SemVer)</a>: <code>MAJOR.MINOR.PATCH</code>.
+<ul>
+<li><code>MAJOR</code>: Alterações incompatíveis.</li>
+<li><code>MINOR</code>: Novas funcionalidades compatíveis.</li>
+<li><code>PATCH</code>: Correções de bugs.</li>
+</ul>
+</li>
+<li>Atualize a versão no arquivo <code>.csproj</code></li>
+</ul>
+<h2 id="configuração-do-projeto">Configuração do Projeto</h2>
+<ol>
+<li><strong>Target Framework</strong>:</li>
+</ol>
+<ul>
+<li>Use o framework mais recente e estável, como <code>.NET 8</code>.</li>
+<li>Configure múltiplos frameworks no <code>.csproj</code> se necessário:<pre><code class="language-xml">  <span class="hljs-tag">&lt;<span class="hljs-name">TargetFrameworks</span>&gt;</span>net8.0;net6.0<span class="hljs-tag">&lt;/<span class="hljs-name">TargetFrameworks</span>&gt;</span>
+</code></pre>
+</li>
+</ul>
+<ol start="2">
+<li>
+<p><strong>Dependências</strong>:</p>
+<ul>
+<li>Evite dependências desnecessárias para manter a biblioteca leve.</li>
+<li>Use versões estáveis e amplamente suportadas de pacotes comuns, como:
+<ul>
+<li><code>Newtonsoft.Json</code> (se necessário, mas prefira <code>System.Text.Json</code> para melhor performance).</li>
+<li><code>Microsoft.Extensions.*</code> para injeção de dependência e configuração.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>Análise de Código</strong>:</p>
+<ul>
+<li>Ative os analisadores de código no <code>.csproj</code>:</li>
+</ul>
+</li>
+<li>
+<p><strong>Nullable Reference Types</strong>:</p>
+<ul>
+<li>Habilite o suporte a tipos nulos para evitar erros:</li>
+</ul>
+</li>
+<li>
+<p><strong>IsPackable:</strong>:</p>
+<ul>
+<li>Habilite a opção para que o .nupkg seja gerado</li>
+</ul>
+<pre><code class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">IsPackable</span>&gt;</span>true<span class="hljs-tag">&lt;/<span class="hljs-name">IsPackable</span>&gt;</span> 
+</code></pre>
+</li>
+</ol>
+<h2 id="boas-práticas-de-código">Boas Práticas de Código</h2>
+<ol>
+<li>
+<p><strong>SOLID</strong>:</p>
+<ul>
+<li>Siga os princípios SOLID para garantir um design limpo e extensível.</li>
+</ul>
+</li>
+<li>
+<p><strong>Documentação</strong>:</p>
+<ul>
+<li>Use comentários XML para documentar classes, métodos e propriedades.</li>
+</ul>
+<pre><code class="language-c#"> <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;summary&gt;</span></span>
+ <span class="hljs-comment"><span class="hljs-doctag">///</span> Classe responsável por gerenciar o provedor de tenants.</span>
+ <span class="hljs-comment"><span class="hljs-doctag">///</span> <span class="hljs-doctag">&lt;/summary&gt;</span></span>
+ <span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">TenantProvider</span> { }
+</code></pre>
+</li>
+<li>
+<p><strong>Testes</strong>:</p>
+<ul>
+<li>Escreva testes unitários para todas as funcionalidades principais.</li>
+<li>Use frameworks como <code>xUnit</code> ou <code>NUnit</code>.</li>
+<li>Garanta alta cobertura de código, mas priorize qualidade sobre quantidade. Recomendamos pelo menos uma cobertura de 90%.</li>
+</ul>
+</li>
+<li>
+<p><strong>Logging</strong>:</p>
+<ul>
+<li>Use <code>Microsoft.Extensions.Logging</code> para logging configurável.</li>
+</ul>
+</li>
+</ol>
+<h2 id="publicação">Publicação</h2>
+<ol>
+<li>
+<p><strong>Pacote NuGet</strong>:</p>
+<ul>
+<li>Configure o <code>.csproj</code> para gerar pacotes NuGet:</li>
+</ul>
+</li>
+<li>
+<p><strong><a href="http://README.html">README.md</a></strong>:</p>
+<ul>
+<li>Inclua um arquivo <code>README.md</code> no pacote com instruções de uso.</li>
+</ul>
+</li>
+<li>
+<p><strong>Automação</strong>:</p>
+<ul>
+<li>Use pipelines de CI/CD (como GitHub Actions ou Azure DevOps) para automatizar build, testes e publicação.</li>
+</ul>
+</li>
+</ol>
+<h2 id="backstage----considerações">Backstage  - Considerações</h2>
+<ol>
+<li>
+<p><strong>Catalógo</strong>:</p>
+<ul>
+<li>Na raiz do projeto deverá ter um arquivo <code>catalog-info.yaml</code> para poder gerar o católogo no Backstage:</li>
+<li>Exemplo do arquivo:</li>
+</ul>
+<pre><code class="language-yaml"><span class="hljs-attr">apiVersion:</span> <span class="hljs-string">backstage.io/v1alpha1</span>
+   <span class="hljs-attr">kind:</span> <span class="hljs-string">Component</span>
+   <span class="hljs-attr">metadata:</span>
+   <span class="hljs-attr">name:</span> <span class="hljs-string">cross-plataforma-net-lib</span>
+   <span class="hljs-attr">description:</span> <span class="hljs-string">A</span> <span class="hljs-string">simple</span> <span class="hljs-string">api</span> <span class="hljs-string">in</span> <span class="hljs-string">python</span>
+   <span class="hljs-attr">annotations:</span>
+      <span class="hljs-attr">github.com/project-slug:</span> <span class="hljs-string">SQ-Sandbox/cross-plataforma-net-lib</span>
+      <span class="hljs-attr">backstage.io/techdocs-ref:</span> <span class="hljs-string">dir:.</span>
+   <span class="hljs-attr">spec:</span>
+   <span class="hljs-attr">type:</span> <span class="hljs-string">service</span>
+   <span class="hljs-attr">owner:</span> <span class="hljs-string">Sinqia</span>
+   <span class="hljs-attr">lifecycle:</span> <span class="hljs-string">experimental</span>
+</code></pre>
+<ul>
+<li>A propridade <strong>name</strong> deve ser o nome da sua biblioteca.</li>
+<li>A propridade <strong><a href="http://github.com/project-slug">github.com/project-slug</a></strong> deve ser o caminho do seu repositório.</li>
+</ul>
+</li>
+<li>
+<p><strong>Tech Docs</strong>:</p>
+<ul>
+<li>Na raiz do projeto deverá ter uma pasta <code>docs</code> e dentro dela um arquivo <code>index.md</code> no pacote com instruções de uso. Esse arquivo deverá  ter a documentação da sua biblioteca que será indexada no TechDocs no Backstage.</li>
+</ul>
+</li>
+<li>
+<p><strong>Automação</strong>:</p>
+<ul>
+<li>Use pipelines de CI/CD (como GitHub Actions ou Azure DevOps) para automatizar build, testes e publicação.</li>
+</ul>
+</li>
+</ol>
+<h2 id="considerações-finais">Considerações Finais</h2>
+<ul>
+<li>Mantenha a biblioteca simples e focada em resolver um problema específico.</li>
+<li>Atualize regularmente para acompanhar as melhores práticas e novas versões do .NET.</li>
+<li>Escute o feedback da comunidade e melhore continuamente.</li>
+</ul>
+
+            
+            
+        </body>
+        </html>

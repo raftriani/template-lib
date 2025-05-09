@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ${{ values.name }}
+  description: ${{ values.description }}
+  annotations:
+    github.com/project-slug: rafaeltriani/${{ values.name }}
+spec:
+  type: nuget/lib
+  owner: rafaeltriani
+  lifecycle: experimental

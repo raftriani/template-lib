@@ -1,0 +1,51 @@
+# Nome de exibição da action na interface
+name: "GH Actions: Template Workflow - (Principal)"
+
+
+on:
+# Permite a execução manual da action
+  workflow_dispatch:
+
+# Permissões básicas
+permissions:
+  security-events:     write
+  contents:            read
+  actions:             read
+
+# Sequência de jobs que são executados na action
+jobs:
+
+  # Sintaxe da chamada de um reusable workflow
+  reusable-workflow:
+    # Path Reusable Workflow
+    uses: ./.github/workflows/template-reusable.yml
+
+  # Nome do Job
+  template-workflow:
+
+    # Onde a action é executada (Runner/hardware/cloud Interno do github)
+    runs-on: ubuntu-latest
+
+    # Sequência de passos a serem executados no workflow
+    steps:
+        # Step que clona o repositório
+      - name: "Step: Clona repositório"
+        uses: actions/checkout@v4 # Action oficial do github
+
+        # Step que executa uma composite action
+      - name: "Step: Composite Action 01"
+        # Path composite Action
+        uses: ./.github/actions/template-composite-01
+
+       # Step que executa uma composite action
+      - name: "Step: Composite Action 02"
+        # Path composite Action
+        uses: ./.github/actions/template-composite-02
+
+        # Step que executa um script no meio do Workflow
+      - name: "Step: Executa script"
+        # Shell padrão: pwsh e bash
+        # Shell adicional: python, sh, cmd e PowerShell
+        shell: python
+        run: |
+          print("Olá")

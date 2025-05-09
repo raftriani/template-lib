@@ -1,0 +1,32 @@
+name: "GH Actions: Template Reusable Workflow"
+
+on:
+# Permite que outro worklow execute este
+  workflow_call:
+
+permissions:
+    security-events:     write
+    contents:            read
+    actions:             read
+
+jobs:
+  reusable-action-01:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: "Step: Clona repositório"
+      uses: actions/checkout@v4
+
+    - name: "Step: Executa script 01..."
+      shell: bash
+      run: |
+        echo "::group::Agrupando seu log 01..."
+        echo "Seu script/código 01"
+        echo ::endgroup::
+
+    - name: "Step: Executa script 02..."
+      shell: bash
+      run: |
+        echo "::group::Agrupando seu log 02..."
+        echo "Seu script/código 02"
+        echo ::endgroup::
