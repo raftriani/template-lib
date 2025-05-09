@@ -5,6 +5,8 @@ metadata:
   description: ${{ values.description }}
   annotations:
     github.com/project-slug: rafaeltriani/${{ values.name }}
+    backstage.io/techdocs-ref: dir:.
+    
 spec:
   type: nuget/lib
   owner: rafaeltriani
