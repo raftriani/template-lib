@@ -4,10 +4,10 @@ metadata:
   name: ${{ values.name }}
   description: ${{ values.description }}
   annotations:
-    github.com/project-slug: rafaeltriani/${{ values.name }}
+    github.com/project-slug: RafaelTriani/${{ values.name }}
     backstage.io/techdocs-ref: dir:.
     
 spec:
   type: nuget/lib
-  owner: rafaeltriani
+  owner: RafaelTriani
   lifecycle: experimental
